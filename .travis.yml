@@ -1,0 +1,17 @@
+language: php
+
+php:
+  - 7.3
+  - 7.4
+
+install:
+  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+
+before_script:
+  - travis_retry mkdir --parents ./build/logs
+
+script:
+  - travis_wait 60 ./vendor/bin/phpunit --coverage-clover=./build/logs/clover.xml
+
+after_script:
+  - travis_retry php ./vendor/bin/php-coveralls --verbose

@@ -1,0 +1,39 @@
+name: tests
+
+on: [push]
+
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: ['7.3', '7.4']
+
+    steps:
+    - name: Setup php ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Validate composer.json
+      run: composer validate
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Run test suites
+      run: |
+        mkdir --parents build/logs
+        vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
+
+    - name: Upload coverage results
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        composer global require php-coveralls/php-coveralls
+        php-coveralls --coverage_clover=build/logs/clover.xml -v

@@ -1,0 +1,33 @@
+{
+    "name": "boatrace-analytics/crawler",
+    "description": "The Boatrace Analytics Crawler.",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "shimomo",
+            "email": "developer@shimomo.net"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "boatrace-analytics/converter": "^1.0",
+        "fabpot/goutte": "^4.0",
+        "illuminate/support": "^8.0",
+        "nesbot/carbon": "^2.0",
+        "php-di/php-di": "^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Boatrace\\Analytics\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Boatrace\\Analytics\\Tests\\": "tests/"
+        }
+    }
+}
